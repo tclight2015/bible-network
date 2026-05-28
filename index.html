@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="lang-zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bible Network — 獨立知識媒體集團</title>
+<meta name="description" content="Bible Network 是專注於區塊鏈、加密貨幣與人工智慧的獨立知識媒體集團，旗下涵蓋 Crypto Bible、DeFi Bible、AI Agent Bible、Claude Me 等系列站點。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a0a;
+  --ink-light: #2a2a2a;
+  --ink-faint: #5a5a5a;
+  --paper: #f5f0e8;
+  --paper-dark: #ede8dc;
+  --accent: #8b0000;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── LANGUAGE CONTENT TOGGLE ── */
+.lc-en, .lc-ja { display: none; }
+.lang-en .lc-en { display: block; }
+.lang-en .lc-zh { display: none; }
+.lang-ja .lc-ja { display: block; }
+.lang-ja .lc-zh { display: none; }
+/* inline spans */
+span.lc-en, span.lc-ja { display: none; }
+.lang-en span.lc-en { display: inline; }
+.lang-en span.lc-zh { display: none; }
+.lang-ja span.lc-ja { display: inline; }
+.lang-ja span.lc-zh { display: none; }
+
+/* ── LANG SWITCH ── */
+.lang-switch {
+  display: inline-flex;
+  gap: 0;
+  border: 1px solid var(--ink);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.lang-switch a {
+  display: block;
+  padding: 3px 10px;
+  color: var(--ink);
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.lang-switch a:not(:last-child) { border-right: 1px solid var(--ink); }
+.lang-switch a:hover, .lang-switch a.active-lang {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ── NETWORK BAR ── */
+.network-bar {
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.network-bar::-webkit-scrollbar { display: none; }
+.network-bar-label {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #f5f0e8;
+  padding: 5px 12px 5px 0;
+  border-right: 1px solid #333;
+  margin-right: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.network-bar a {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #999;
+  text-decoration: none;
+  padding: 5px 10px;
+  white-space: nowrap;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+.network-bar a:hover { color: #f5f0e8; }
+.network-bar-item--inactive {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #555;
+  padding: 5px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: default;
+  user-select: none;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  border-top: 4px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 14px 24px 10px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: flex-end;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.masthead-left, .masthead-right {
+  color: var(--ink-faint);
+  font-size: 10px;
+  line-height: 1.5;
+}
+.masthead-right { text-align: right; }
+.masthead-center { text-align: center; }
+.masthead-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 900;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: none;
+  display: block;
+}
+.masthead-logo span { color: var(--accent); }
+.masthead-tagline {
+  display: block;
+  font-family: 'Source Serif 4', serif;
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  color: var(--ink-faint);
+  margin-top: 4px;
+  text-transform: none;
+}
+
+/* ── DATE BAR ── */
+.date-bar {
+  border-bottom: 3px double var(--ink);
+  padding: 5px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ── CONTAINER ── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── LEAD ── */
+.lead-section {
+  padding: 32px 0 24px;
+  border-bottom: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 40px;
+  align-items: start;
+}
+.lead-left { }
+.lead-kicker {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.lead-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.lead-title em {
+  font-style: italic;
+  font-weight: 400;
+}
+.lead-right {
+  border-left: 1px solid var(--paper-dark);
+  padding-left: 36px;
+}
+.lead-body {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--ink-light);
+}
+.lead-body p + p { margin-top: 10px; }
+.lead-body strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 0 16px;
+}
+.section-divider-label {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.section-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--ink);
+}
+.section-divider-count {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── SITE GRID ── */
+.site-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--ink);
+  border-left: 1px solid var(--ink);
+}
+.site-card {
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 115px;
+}
+.site-card--live { background: var(--paper); transition: background 0.12s; }
+.site-card--live:hover { background: var(--paper-dark); }
+.site-card--coming { background: #f0ece4; }
+.site-card a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.site-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.site-card--coming .site-card-name { color: var(--ink-faint); }
+.site-card-domain {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  opacity: 0.7;
+}
+.site-card-desc {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  line-height: 1.4;
+  margin-top: 4px;
+  flex: 1;
+}
+.site-card--coming .site-card-desc { opacity: 0.6; }
+.site-card-badge {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 2px;
+  align-self: flex-start;
+}
+.badge-live { background: var(--accent); color: #fff; }
+.badge-coming {
+  background: transparent;
+  color: var(--ink-faint);
+  border: 1px solid #ccc;
+  opacity: 0.7;
+}
+
+/* ── ABOUT STRIP ── */
+.about-strip {
+  border-top: 3px double var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 24px 0;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr;
+  gap: 0;
+  margin-top: 32px;
+}
+.about-col { padding: 0 24px; }
+.about-col:first-child { padding-left: 0; }
+.about-col:last-child { padding-right: 0; }
+.about-strip-divider { background: var(--paper-dark); width: 1px; }
+.about-col-label {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.about-col-text { font-size: 13px; line-height: 1.65; color: var(--ink-light); }
+.about-col-text strong { font-weight: 600; color: var(--ink); }
+
+/* ── CONTACT BAR ── */
+.contact-bar {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--paper-dark);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.contact-label {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.contact-email {
+  font-family: 'Source Serif 4', serif;
+  font-size: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink-faint);
+}
+.contact-email:hover { border-color: var(--accent); color: var(--accent); }
+.contact-note { font-family: 'Source Sans 3', sans-serif; font-size: 10px; color: var(--ink-faint); }
+
+/* ── FOOTER ── */
+footer { background: var(--paper); border-top: 4px solid var(--ink); margin-top: 40px; }
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  border-bottom: 1px solid var(--ink);
+}
+.footer-col { padding: 22px 26px; }
+.footer-col:first-child { padding-left: 0; }
+.footer-divider { background: var(--ink); width: 1px; }
+.col-label {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ink);
+  margin-bottom: 14px;
+}
+.brand-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.brand-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink); }
+.brand-name span { color: var(--accent); }
+.brand-tagline { font-family: 'Source Sans 3', sans-serif; font-size: 10px; color: var(--ink-faint); line-height: 1.5; }
+.footer-legal-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.legal-group { border-bottom: 1px solid var(--paper-dark); padding: 7px 0; }
+.legal-group:nth-child(odd) { border-right: 1px solid var(--paper-dark); padding-right: 12px; }
+.legal-group:nth-child(even) { padding-left: 12px; }
+.legal-group:nth-last-child(-n+2) { border-bottom: none; }
+.legal-group-title { font-family: 'Playfair Display', serif; font-size: 12.5px; font-weight: 700; display: block; margin-bottom: 4px; }
+.legal-group ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+.legal-group a { font-family: 'Source Sans 3', sans-serif; font-size: 10px; color: var(--ink-faint); text-decoration: none; }
+.legal-group a:hover { color: var(--accent); }
+.footer-cta {
+  display: inline-block; margin-top: 14px;
+  font-family: 'Source Sans 3', sans-serif; font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--accent); text-decoration: none;
+}
+.footer-cta:hover { text-decoration: underline; }
+.footer-bottom {
+  padding: 11px 0;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 3px double var(--ink); flex-wrap: wrap; gap: 6px;
+}
+.footer-copyright { font-family: 'Source Sans 3', sans-serif; font-size: 10px; color: var(--ink-faint); }
+.footer-legal-links { display: flex; gap: 16px; }
+.footer-legal-links a { font-family: 'Source Sans 3', sans-serif; font-size: 10px; color: var(--ink-faint); text-decoration: none; }
+.footer-legal-links a:hover { color: var(--accent); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 760px) {
+  .masthead { grid-template-columns: 1fr; text-align: center; gap: 6px; }
+  .masthead-left, .masthead-right { display: none; }
+  .lead-section { grid-template-columns: 1fr; gap: 20px; }
+  .lead-right { border-left: none; padding-left: 0; border-top: 1px solid var(--paper-dark); padding-top: 20px; }
+  .site-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-strip { grid-template-columns: 1fr; }
+  .about-strip-divider { display: none; }
+  .about-col { padding: 0 0 16px; border-bottom: 1px solid var(--paper-dark); margin-bottom: 16px; }
+  .about-col:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-divider { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NETWORK BAR -->
+<div class="network-bar">
+  <span class="network-bar-label">Bible Network</span>
+  <a href="https://claude-me.com" target="_blank" rel="noopener nofollow">Claude Me</a>
+  <span class="network-bar-item--inactive">Claude Skill Me</span>
+  <span class="network-bar-item--inactive">Claude Design Me</span>
+  <span class="network-bar-item--inactive">Claude Cowork Me</span>
+  <span class="network-bar-item--inactive">Crypto</span>
+  <span class="network-bar-item--inactive">DeFi</span>
+  <span class="network-bar-item--inactive">AI Agent</span>
+  <span class="network-bar-item--inactive">Stablecoin</span>
+  <span class="network-bar-item--inactive">Onchain</span>
+  <span class="network-bar-item--inactive">RWA</span>
+  <span class="network-bar-item--inactive">DeFAI</span>
+  <span class="network-bar-item--inactive">AGI</span>
+  <span class="network-bar-item--inactive">Chain</span>
+  <span class="network-bar-item--inactive">SAFU</span>
+  <span class="network-bar-item--inactive">CryptoTax</span>
+</div>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-left">
+    <span class="lc-zh">獨立知識媒體<br>與任何項目無關聯</span>
+    <span class="lc-en">Independent Media<br>Not affiliated with any project</span>
+    <span class="lc-ja">独立メディア<br>いかなるプロジェクトとも無提携</span>
+  </div>
+  <div class="masthead-center">
+    <span class="masthead-logo">Bible <span>Network</span></span>
+    <span class="masthead-tagline">
+      <span class="lc-zh">區塊鏈 · 加密貨幣 · 人工智慧</span>
+      <span class="lc-en">Blockchain · Crypto · Artificial Intelligence</span>
+      <span class="lc-ja">ブロックチェーン · 暗号資産 · 人工知能</span>
+    </span>
+    <div class="lang-switch">
+      <a class="lang-btn active-lang" data-lang="zh" onclick="setLang('zh'); return false;">繁中</a>
+      <a class="lang-btn" data-lang="en" onclick="setLang('en'); return false;">EN</a>
+      <a class="lang-btn" data-lang="ja" onclick="setLang('ja'); return false;">日本語</a>
+    </div>
+  </div>
+  <div class="masthead-right">bible-network.com</div>
+</div>
+
+<!-- DATE BAR -->
+<div class="date-bar">
+  <span>
+    <span class="lc-zh">Bible Network · 獨立知識媒體集團</span>
+    <span class="lc-en">Bible Network · Independent Knowledge Media Group</span>
+    <span class="lc-ja">Bible Network · 独立知識メディアグループ</span>
+  </span>
+  <span>bible-network.com &nbsp;·&nbsp; biz@bible-network.com</span>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+  <!-- LEAD -->
+  <div class="lead-section">
+    <div class="lead-left">
+      <div class="lead-kicker">About Bible Network</div>
+      <h1 class="lead-title">
+        <span class="lc-zh">把複雜的機制<br>說清楚</span>
+        <span class="lc-en">Making Complex<br>Mechanisms Clear</span>
+        <span class="lc-ja">複雑な仕組みを、<br>わかりやすく。</span>
+      </h1>
+    </div>
+    <div class="lead-right">
+      <div class="lead-body">
+        <div class="lc-zh">
+          <p>Bible Network 是一個專注於區塊鏈、加密貨幣與人工智慧領域的獨立知識媒體集團，以繁體中文與英文雙語提供深度教育內容。</p>
+          <p>我們相信複雜的技術機制應該被說清楚，而不是被簡化成口號。每一篇文章和詞條，都從四個問題出發：<strong>這件事為什麼發生、機制是什麼、對你有什麼影響、你應該怎麼做</strong>。</p>
+          <p>旗下所有站點均為獨立媒體，不接受廣告主干預編輯內容，不為任何項目背書，所有評價以機制分析與公開資訊為基礎。</p>
+        </div>
+        <div class="lc-en">
+          <p>Bible Network is an independent knowledge media group focused on blockchain, cryptocurrency, and artificial intelligence, providing in-depth educational content in Traditional Chinese and English.</p>
+          <p>We believe complex technical mechanisms should be explained clearly, not reduced to slogans. Every article starts from four questions: <strong>why it happened, what the mechanism is, how it affects you, and what you should do</strong>.</p>
+          <p>All properties are independent media. We do not accept advertiser interference in editorial content, do not endorse any project, and all assessments are based on mechanism analysis and public information.</p>
+        </div>
+        <div class="lc-ja">
+          <p>Bible Network は、ブロックチェーン・暗号資産・人工知能の分野に特化した独立系知識メディアグループです。繁体字中国語と英語で深度ある教育コンテンツを提供しています。</p>
+          <p>複雑な技術的仕組みはスローガンに単純化せず、明確に説明されるべきだと考えています。すべての記事は4つの問いを出発点とします：<strong>なぜ起きたのか、仕組みは何か、あなたにどう影響するか、どう行動すべきか</strong>。</p>
+          <p>傘下の全サイトは独立メディアです。広告主による編集介入を一切受け入れず、いかなるプロジェクトも支持せず、すべての評価は仕組みの分析と公開情報に基づいています。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRYPTO SERIES -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">
+      <span class="lc-zh">加密聖經系列</span>
+      <span class="lc-en">Crypto Bible Series</span>
+      <span class="lc-ja">暗号聖書シリーズ</span>
+    </div>
+    <div class="section-divider-line"></div>
+    <div class="section-divider-count">11</div>
+  </div>
+
+  <div class="site-grid">
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">Crypto Bible</div>
+      <div class="site-card-domain">crypto-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">加密貨幣機制深度拆解。從比特幣的 UTXO 模型到以太坊的 EIP 升級，追蹤底層技術演變。</span>
+        <span class="lc-en">Deep-dive crypto mechanics. From Bitcoin's UTXO to Ethereum EIPs, tracking underlying technology evolution.</span>
+        <span class="lc-ja">暗号資産の仕組みを徹底解説。BTCのUTXOモデルからEthereumのEIPまで技術進化を追う。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">DeFi Bible</div>
+      <div class="site-card-domain">defi-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">DeFi 協議底層運作分析。流動性池定價、清算機制、利率曲線設計取捨與風險。</span>
+        <span class="lc-en">DeFi protocol analysis. Liquidity pool pricing, liquidation mechanics, and interest rate curve trade-offs.</span>
+        <span class="lc-ja">DeFiプロトコルの底層分析。流動性プールの価格決定・清算メカニズム・金利曲線の設計取捨。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">AI Agent Bible</div>
+      <div class="site-card-domain">aiagent-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">AI Agent 架構與機制。從單一模型到多 Agent 協作，解析 Agent 系統的底層設計邏輯。</span>
+        <span class="lc-en">AI Agent architecture. From single models to multi-agent collaboration — the underlying design logic of agent systems.</span>
+        <span class="lc-ja">AIエージェントのアーキテクチャと仕組み。単一モデルからマルチエージェント協調まで底層設計を解説。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">Stablecoin Bible</div>
+      <div class="site-card-domain">stablecoin-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">穩定幣機制與風險剖析。三種模型的設計邏輯與崩潰條件，讓讀者在使用前理解風險。</span>
+        <span class="lc-en">Stablecoin mechanics and risk. Three model types, their design logic, and the conditions under which each collapses.</span>
+        <span class="lc-ja">ステーブルコインの仕組みとリスク。3種類のモデルの設計論理と崩壊条件を解説。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">Onchain Bible</div>
+      <div class="site-card-domain">onchain-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">鏈上數據解讀與應用。NVT、MVRV、資金費率——讓數據成為判斷依據，而不是裝飾。</span>
+        <span class="lc-en">Onchain data literacy. NVT, MVRV, funding rates — turning blockchain data into judgment, not decoration.</span>
+        <span class="lc-ja">オンチェーンデータの読み方。NVT・MVRV・資金調達率を判断の根拠として使いこなす。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">RWA Bible</div>
+      <div class="site-card-domain">rwa-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">現實資產代幣化全解析。國債上鏈、房地產代幣化，拆解每個模型的實際可行性。</span>
+        <span class="lc-en">Real-world asset tokenization. Treasury bonds on-chain, real estate tokenization — analyzing the viability of each model.</span>
+        <span class="lc-ja">リアルワールドアセットのトークン化。国債オンチェーン・不動産トークン化——各モデルの実現可能性を分析。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">DeFAI Bible</div>
+      <div class="site-card-domain">defai-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">AI Agent 在金融場景的執行層拆解。Agent 授權風險、跨鏈協調與策略績效分析。</span>
+        <span class="lc-en">AI agents in financial execution. Authorization risks, cross-chain coordination, and strategy performance in real DeFi scenarios.</span>
+        <span class="lc-ja">金融シナリオにおけるAIエージェントの実行層。認可リスク・クロスチェーン協調・戦略パフォーマンス分析。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">AGI Bible</div>
+      <div class="site-card-domain">agi-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">AGI 臨界點觀測站。追蹤各實驗室的 AGI 定義、關鍵 benchmark 進展與對齊研究現況。</span>
+        <span class="lc-en">AGI threshold observatory. Tracking lab definitions, key benchmark progress, and alignment research across the AGI transition.</span>
+        <span class="lc-ja">AGI臨界点観測所。各研究所のAGI定義・主要ベンチマーク進捗・アライメント研究の現況を追う。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">Chain Bible</div>
+      <div class="site-card-domain">chain-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">公鏈技術與生態比較。共識機制、虛擬機設計、Layer 2 架構的技術選擇與取捨。</span>
+        <span class="lc-en">Public chain technology comparison. Consensus mechanisms, VM design, Layer 2 architecture — the technical trade-offs that define each chain.</span>
+        <span class="lc-ja">パブリックチェーンの技術比較。コンセンサスメカニズム・VM設計・L2アーキテクチャの取捨選択を解説。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">SAFU Bible</div>
+      <div class="site-card-domain">safu-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">資產安全與詐騙識別。私鑰管理、釣魚攻擊、Rug Pull 特徵、智能合約授權風險。</span>
+        <span class="lc-en">Crypto asset security. Private key management, phishing, rug pull patterns, and smart contract authorization risks.</span>
+        <span class="lc-ja">暗号資産のセキュリティ。秘密鍵管理・フィッシング・ラグプルの特徴・スマートコントラクト承認リスク。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">CryptoTax Bible</div>
+      <div class="site-card-domain">cryptotax-bible.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">加密貨幣稅務申報指南。不同司法管轄區規則、常見申報錯誤，建立基本合規認知。</span>
+        <span class="lc-en">Crypto tax compliance guide. Rules across jurisdictions, common filing mistakes, and foundational knowledge for tax reporting.</span>
+        <span class="lc-ja">暗号資産の税務申告ガイド。各国の規則・よくある申告ミス・基礎知識を網羅。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+  </div><!-- /site-grid crypto -->
+
+  <!-- CLAUDE SERIES -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">
+      <span class="lc-zh">Claude 系列</span>
+      <span class="lc-en">Claude Series</span>
+      <span class="lc-ja">Claudeシリーズ</span>
+    </div>
+    <div class="section-divider-line"></div>
+    <div class="section-divider-count">4</div>
+  </div>
+
+  <div class="site-grid">
+
+    <div class="site-card site-card--live">
+      <a href="https://claude-me.com" target="_blank" rel="noopener">
+        <div class="site-card-name">Claude Me</div>
+        <div class="site-card-domain">claude-me.com</div>
+        <div class="site-card-desc">
+          <span class="lc-zh">Claude 教學與實戰應用。提示詞工程、工作流自動化、Claude API 整合，從入門到進階。</span>
+          <span class="lc-en">Claude tutorials and practical guides. Prompt engineering, workflow automation, Claude API integration — beginner to advanced.</span>
+          <span class="lc-ja">Claudeのチュートリアルと実践ガイド。プロンプトエンジニアリング・ワークフロー自動化・Claude API連携。</span>
+        </div>
+        <span class="site-card-badge badge-live"><span class="lc-zh">已上線</span><span class="lc-en">Live</span><span class="lc-ja">公開中</span></span>
+      </a>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">Claude Skill Me</div>
+      <div class="site-card-domain">claudeskill-me.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">學會用 Claude，每件事都做得更好。技能拆解與實戰練習，從任務導向出發。</span>
+        <span class="lc-en">Learn Claude skills. Do everything better. Skill breakdowns and hands-on practice, task-first approach.</span>
+        <span class="lc-ja">Claudeスキルを学んで、すべてをうまくやろう。スキル分解と実践演習、タスク起点のアプローチ。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">Claude Design Me</div>
+      <div class="site-card-domain">claudedesign-me.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">用 Claude Design，把想法變成可互動的視覺。設計師與產品人的 AI 創作指南。</span>
+        <span class="lc-en">Turn ideas into interactive visuals with Claude Design. A creative guide for designers and product people.</span>
+        <span class="lc-ja">Claude Designで、アイデアをインタラクティブなビジュアルに変える。デザイナーと产品人のためのガイド。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+    <div class="site-card site-card--coming">
+      <div class="site-card-name">Claude Cowork Me</div>
+      <div class="site-card-domain">claudecowork-me.com</div>
+      <div class="site-card-desc">
+        <span class="lc-zh">讓 Claude 替你工作，不只是幫你回答。從提問到委派，建立人機協作的工作模式。</span>
+        <span class="lc-en">Let Claude do the work, not just answer. From prompting to delegation — building a human-AI workflow.</span>
+        <span class="lc-ja">Claudeに答えさせるだけでなく、仕事をさせよう。提案から委任まで、人機協働の働き方を構築する。</span>
+      </div>
+      <span class="site-card-badge badge-coming"><span class="lc-zh">即將上線</span><span class="lc-en">Coming Soon</span><span class="lc-ja">近日公開</span></span>
+    </div>
+
+  </div><!-- /site-grid claude -->
+
+  <!-- ABOUT STRIP -->
+  <div class="about-strip">
+    <div class="about-col">
+      <div class="about-col-label"><span class="lc-zh">編輯準則</span><span class="lc-en">Editorial Standards</span><span class="lc-ja">編集方針</span></div>
+      <div class="lc-zh"><p class="about-col-text">所有數字、機制描述與協議參數必須有可查驗的來源。每篇文章需回答四個問題：<strong>為什麼發生、機制是什麼、如何影響讀者、讀者應該怎麼做</strong>。</p></div>
+      <div class="lc-en"><p class="about-col-text">All figures, mechanism descriptions, and protocol parameters must have verifiable sources. Every article answers four questions: <strong>why it happened, what the mechanism is, how it affects readers, and what readers should do</strong>.</p></div>
+      <div class="lc-ja"><p class="about-col-text">すべての数字・仕組みの説明・プロトコルパラメータには検証可能な出典が必要です。各記事は4つの問いに答えます：<strong>なぜ起きたか、仕組みは何か、読者にどう影響するか、読者はどうすべきか</strong>。</p></div>
+    </div>
+    <div class="about-strip-divider"></div>
+    <div class="about-col">
+      <div class="about-col-label"><span class="lc-zh">SVG 圖解</span><span class="lc-en">SVG Diagrams</span><span class="lc-ja">SVGダイアグラム</span></div>
+      <div class="lc-zh"><p class="about-col-text">所有複雜機制配有原創 SVG 圖解，數字和邏輯與文字內容完全對齊，可單獨下載分享。圖解是理解工具，不是裝飾。</p></div>
+      <div class="lc-en"><p class="about-col-text">All complex mechanisms include original SVG diagrams. Numbers and logic are fully aligned with the written content, and diagrams can be downloaded and shared independently. Diagrams are tools for understanding, not decoration.</p></div>
+      <div class="lc-ja"><p class="about-col-text">すべての複雑な仕組みにオリジナルのSVGダイアグラムを付けています。数字と論理は文章と完全に一致し、単独でダウンロード・シェアできます。ダイアグラムは理解のためのツールであり、装飾ではありません。</p></div>
+    </div>
+    <div class="about-strip-divider"></div>
+    <div class="about-col">
+      <div class="about-col-label"><span class="lc-zh">獨立媒體</span><span class="lc-en">Independent Media</span><span class="lc-ja">独立メディア</span></div>
+      <div class="lc-zh"><p class="about-col-text">不接受廣告主干預編輯內容，不為任何項目背書。糾錯記錄公開於文章頂端，不靜默修改已發布內容。</p></div>
+      <div class="lc-en"><p class="about-col-text">No advertiser interference in editorial content, no endorsements of any project. Corrections are noted publicly at the top of the affected article — we do not silently modify published content.</p></div>
+      <div class="lc-ja"><p class="about-col-text">広告主による編集介入なし、いかなるプロジェクトも支持しません。訂正は記事の冒頭に公開し、発表済みコンテンツをサイレント修正することはありません。</p></div>
+    </div>
+  </div>
+
+  <!-- CONTACT BAR -->
+  <div class="contact-bar">
+    <span class="contact-label">
+      <span class="lc-zh">商業合作 · 媒體採訪 · 內容授權</span>
+      <span class="lc-en">Business · Media · Licensing</span>
+      <span class="lc-ja">ビジネス・取材・ライセンス</span>
+    </span>
+    <a href="mailto:biz@bible-network.com" class="contact-email">biz@bible-network.com</a>
+    <span class="contact-note">
+      <span class="lc-zh">通常在 3 個工作日內回覆</span>
+      <span class="lc-en">Usually responds within 3 business days</span>
+      <span class="lc-ja">通常3営業日以内に返信します</span>
+    </span>
+  </div>
+
+</div><!-- /container -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="col-label">Bible Network</div>
+        <div class="brand-row">
+          <div class="brand-name">Bible <span>Network</span></div>
+          <div class="brand-tagline">
+            <span class="lc-zh">獨立知識媒體集團。所有內容僅供教育參考，不構成任何投資建議。</span>
+            <span class="lc-en">Independent knowledge media group. All content is for educational purposes only, not investment advice.</span>
+            <span class="lc-ja">独立系知識メディアグループ。コンテンツは教育目的のみで、投資アドバイスではありません。</span>
+          </div>
+        </div>
+        <p style="font-family:'Source Sans 3',sans-serif; font-size:11px; color:var(--ink-faint); line-height:1.6;">
+          <span class="lc-zh">Bible Network 旗下共 15 個知識站點，涵蓋加密貨幣、DeFi、鏈上數據、穩定幣、RWA、公鏈技術、資產安全、稅務合規、AI Agent、Claude 應用、DeFAI 與 AGI 等領域。</span>
+          <span class="lc-en">Bible Network operates 15 knowledge properties covering crypto, DeFi, onchain data, stablecoins, RWA, chain technology, asset security, tax compliance, AI Agent, Claude applications, DeFAI, and AGI.</span>
+          <span class="lc-ja">Bible Networkは15のナレッジサイトを運営し、暗号資産・DeFi・オンチェーンデータ・ステーブルコイン・RWA・ブロックチェーン技術・セキュリティ・税務・AIエージェント・Claude活用・DeFAI・AGIを網羅しています。</span>
+        </p>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-col">
+        <div class="col-label">
+          <span class="lc-zh">法律資訊</span><span class="lc-en">Legal</span><span class="lc-ja">法的情報</span>
+        </div>
+        <div class="footer-legal-list">
+          <div class="legal-group">
+            <span class="legal-group-title"><span class="lc-zh">隱私權政策</span><span class="lc-en">Privacy Policy</span><span class="lc-ja">プライバシーポリシー</span></span>
+            <ul>
+              <li><a href="/legal#privacy"><span class="lc-zh">隱私權政策全文</span><span class="lc-en">Full Privacy Policy</span><span class="lc-ja">プライバシーポリシー全文</span></a></li>
+              <li><a href="/legal#cookie"><span class="lc-zh">Cookie 政策</span><span class="lc-en">Cookie Policy</span><span class="lc-ja">Cookieポリシー</span></a></li>
+              <li><a href="/legal#gdpr">GDPR / CCPA</a></li>
+            </ul>
+          </div>
+          <div class="legal-group">
+            <span class="legal-group-title"><span class="lc-zh">服務條款</span><span class="lc-en">Terms</span><span class="lc-ja">利用規約</span></span>
+            <ul>
+              <li><a href="/legal#terms"><span class="lc-zh">服務條款全文</span><span class="lc-en">Terms of Service</span><span class="lc-ja">利用規約全文</span></a></li>
+              <li><a href="/legal#copyright"><span class="lc-zh">版權聲明</span><span class="lc-en">Copyright</span><span class="lc-ja">著作権</span></a></li>
+              <li><a href="/legal#editorial"><span class="lc-zh">編輯準則</span><span class="lc-en">Editorial Standards</span><span class="lc-ja">編集方針</span></a></li>
+            </ul>
+          </div>
+          <div class="legal-group">
+            <span class="legal-group-title"><span class="lc-zh">聲明揭露</span><span class="lc-en">Disclosures</span><span class="lc-ja">開示事項</span></span>
+            <ul>
+              <li><a href="/legal#disclaimer"><span class="lc-zh">免責聲明</span><span class="lc-en">Disclaimer</span><span class="lc-ja">免責事項</span></a></li>
+              <li><a href="/legal#affiliate"><span class="lc-zh">聯盟行銷揭露</span><span class="lc-en">Affiliate Disclosure</span><span class="lc-ja">アフィリエイト開示</span></a></li>
+            </ul>
+          </div>
+          <div class="legal-group">
+            <span class="legal-group-title"><span class="lc-zh">聯繫我們</span><span class="lc-en">Contact</span><span class="lc-ja">お問い合わせ</span></span>
+            <ul>
+              <li><a href="/about/"><span class="lc-zh">關於我們</span><span class="lc-en">About Us</span><span class="lc-ja">私たちについて</span></a></li>
+              <li><a href="mailto:biz@bible-network.com">biz@bible-network.com</a></li>
+            </ul>
+          </div>
+        </div>
+        <a class="footer-cta" href="/legal/">
+          <span class="lc-zh">完整法律聲明 →</span>
+          <span class="lc-en">Full Legal Notice →</span>
+          <span class="lc-ja">法的情報全文 →</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copyright">© 2026 Bible Network · bible-network.com</div>
+      <div class="footer-legal-links">
+        <a href="/legal#privacy"><span class="lc-zh">隱私權</span><span class="lc-en">Privacy</span><span class="lc-ja">プライバシー</span></a>
+        <a href="/legal#disclaimer"><span class="lc-zh">免責聲明</span><span class="lc-en">Disclaimer</span><span class="lc-ja">免責事項</span></a>
+        <a href="/legal#terms"><span class="lc-zh">服務條款</span><span class="lc-en">Terms</span><span class="lc-ja">利用規約</span></a>
+        <a href="/legal#affiliate"><span class="lc-zh">聯盟揭露</span><span class="lc-en">Affiliate</span><span class="lc-ja">アフィリエイト</span></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function setLang(lang) {
+  var html = document.documentElement;
+  html.className = 'lang-' + lang;
+  html.lang = lang === 'zh' ? 'zh-TW' : lang;
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active-lang', btn.dataset.lang === lang);
+  });
+  try { localStorage.setItem('bn-lang', lang); } catch(e) {}
+}
+(function() {
+  var saved = 'zh';
+  try { saved = localStorage.getItem('bn-lang') || 'zh'; } catch(e) {}
+  if (saved !== 'zh') setLang(saved);
+})();
+</script>
+</body>
+</html>
