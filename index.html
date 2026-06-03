@@ -427,7 +427,7 @@ footer { background: var(--paper); border-top: 4px solid var(--ink); margin-top:
 }
 .footer-copyright { font-family: 'Source Sans 3', sans-serif; font-size: 10px; color: var(--ink-faint); }
 .footer-legal-links { display: flex; gap: 16px; }
-.footer-legal-links a { font-family: 'Source Sans 3', sans-serif; font-size: 10px; color: var(--ink-faint); text-decoration: none; }
+.footer-legal-links a, .footer-legal-links > span { font-family: 'Source Sans 3', sans-serif; font-size: 10px; color: var(--ink-faint); text-decoration: none; }
 .footer-legal-links a:hover { color: var(--accent); }
 
 /* ── RESPONSIVE ── */
@@ -844,10 +844,10 @@ footer { background: var(--paper); border-top: 4px solid var(--ink); margin-top:
     <div class="footer-bottom">
       <div class="footer-copyright">© 2026 Bible Network · bible-network.com</div>
       <div class="footer-legal-links">
-        <a href="/legal#privacy"><span class="lc-zh">隱私權</span><span class="lc-en">Privacy</span><span class="lc-ja">プライバシー</span></a>
-        <a href="/legal#disclaimer"><span class="lc-zh">免責聲明</span><span class="lc-en">Disclaimer</span><span class="lc-ja">免責事項</span></a>
-        <a href="/legal#terms"><span class="lc-zh">服務條款</span><span class="lc-en">Terms</span><span class="lc-ja">利用規約</span></a>
-        <a href="/legal#affiliate"><span class="lc-zh">聯盟揭露</span><span class="lc-en">Affiliate</span><span class="lc-ja">アフィリエイト</span></a>
+        <span><span class="lc-zh">隱私權</span><span class="lc-en">Privacy</span><span class="lc-ja">プライバシー</span></span>
+        <span><span class="lc-zh">免責聲明</span><span class="lc-en">Disclaimer</span><span class="lc-ja">免責事項</span></span>
+        <span><span class="lc-zh">服務條款</span><span class="lc-en">Terms</span><span class="lc-ja">利用規約</span></span>
+        <span><span class="lc-zh">聯盟揭露</span><span class="lc-en">Affiliate</span><span class="lc-ja">アフィリエイト</span></span>
       </div>
     </div>
   </div>
